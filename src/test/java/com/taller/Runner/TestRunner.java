@@ -8,7 +8,7 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
 		features = "src/test/resources/features/", 
 		glue = "com.taller",
-		tags = "@POC",
+		tags = "@login_excel",
 		plugin = {"pretty",
 				  "summary",
 				  "html:target/cucumber-reports/html-report.html",

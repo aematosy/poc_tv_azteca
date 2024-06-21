@@ -1,5 +1,6 @@
 package com.taller.Pages;
 
+import io.cucumber.datatable.DataTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
@@ -8,6 +9,8 @@ import com.taller.Utils.Utilities;
 import com.taller.Utils.Base;
 import com.taller.Constants.HomeConstants;
 import org.testng.Assert;
+import com.taller.Utils.Excel;
+import com.taller.Utils.CucumberNewUtil;
 
 public class HomePage extends Base{
 	private final Logger logger = LogManager.getLogger(HomePage.class.getName());
@@ -44,5 +47,32 @@ public class HomePage extends Base{
 	public void validateFailedLogin(String message) {
 		String failedMessage = Utilities.getText(HomeConstants.FAILED_LOGIN_MESSAGE);
 		Assert.assertEquals(message, failedMessage);
+	}
+
+	public void readExcelData(DataTable table){
+
+		String projectPath = System.getProperty("user.dir");
+		String rutaExcel = projectPath + "/src/test/resources/data/";
+
+		CucumberNewUtil.ConvertDataTableToDict(table);
+		String archivoExcel = rutaExcel + CucumberNewUtil.GetCellValueWithRowIndex("archivo", 1);
+		String hojaExcel = CucumberNewUtil.GetCellValueWithRowIndex("hoja", 1);
+
+		try {
+			Excel util = new Excel(archivoExcel, hojaExcel);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int nroRegistros = Excel.RowCount();
+
+		for (int i = 1; i < nroRegistros; i++) {
+			String email = Excel.ReadCell("email", i);
+			String password = Excel.ReadCell("password", i);
+
+			System.out.println("email: " + email);
+			System.out.println("password: " + password);
+
+			fillEmailPassword(email,password);
+		}
 	}
 }

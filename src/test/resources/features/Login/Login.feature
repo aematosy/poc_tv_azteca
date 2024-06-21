@@ -26,3 +26,11 @@ Feature: LoginPage of TV Azteca digital
     Examples:
       | email            | password  | message                                    |
       | failed@gmail.com | test123A@ | El usuario o la contraseña son incorrectos |
+
+  @login_excel
+  Scenario: Check login is succesful with valid credentials from excel
+    When I click on "Iniciar sesion" option
+    Then I click on "Iniciar con correo electronico" option
+    When enter email and password from excel
+      | archivo  | hoja  |
+      | Data.xls | Hoja1 |

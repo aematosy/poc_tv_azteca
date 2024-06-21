@@ -2,6 +2,7 @@ package com.taller.Steps;
 
 import com.taller.Pages.*;
 import com.taller.Utils.Base;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -38,5 +39,10 @@ public class HomeSteps extends Base {
     @Then("I validate the error message {string}")
     public void validateFailedLogin(String message){
         home.validateFailedLogin(message);
+    }
+
+    @Then("enter email and password from excel")
+    public void user_email_username_and_password_from_excel(DataTable table){
+        home.readExcelData(table);
     }
 }
